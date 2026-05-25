@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Cinzel", serif;
+  --font-sans: "Montserrat", sans-serif;
+  
+  --color-gold-light: #F3E5AB;
+  --color-gold: #D4AF37;
+  --color-gold-dark: #AA7C11;
+  --color-dark-bg: #050505;
+  --color-dark-panel: #121212;
+  --color-dark-panel-hover: #1A1A1A;
+}
+
+:root {
+  --background: #050505;
+  --foreground: #ffffff;
+}
+
+body {
+  background-color: #050505;
+  color: #ffffff;
+  font-family: "Montserrat", sans-serif;
+}
+
+/* Custom luxury effects */
+.glow-gold {
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.15);
+}
+
+.glow-gold-hover {
+  transition: all 0.3s ease;
+}
+
+.glow-gold-hover:hover {
+  box-shadow: 0 0 25px rgba(212, 175, 55, 0.25);
+  border-color: rgba(212, 175, 55, 0.4) !important;
+}
+
+.text-gold-gradient {
+  background: linear-gradient(135deg, #F3E5AB 0%, #D4AF37 50%, #AA7C11 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.bg-gold-gradient {
+  background: linear-gradient(135deg, #F3E5AB 0%, #D4AF37 50%, #AA7C11 100%);
+}
+
+.glassmorphism {
+  background: rgba(18, 18, 18, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.glassmorphism-gold {
+  background: rgba(18, 18, 18, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(212, 175, 55, 0.15);
+}
+
+/* Custom premium scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+::-webkit-scrollbar-thumb {
+  background: #D4AF37;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #AA7C11;
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s ease forwards;
+}
+
+/* Smoke vapor effect */
+@keyframes vapor {
+  0% {
+    transform: translateY(0) scale(1) rotate(0deg);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.15;
+  }
+  100% {
+    transform: translateY(-80px) scale(1.4) rotate(15deg);
+    opacity: 0;
+  }
+}
+
+.vapor-particle {
+  animation: vapor 6s infinite ease-in-out;
+}
+
+.premium-loader-bar {
+  animation: loaderBar 1.2s ease-in-out forwards;
+}
+
+@keyframes loaderBar {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
+/* Scroll reveal */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal-on-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}

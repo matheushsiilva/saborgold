@@ -1,0 +1,83 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Product {
+  id           String   @id @default(uuid())
+  name         String
+  description  String
+  price        Float
+  imageUrl     String
+  categoryId   String
+  category     Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  isFeatured   Boolean  @default(false)
+  isBestSeller Boolean  @default(false)
+  inStock      Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Category {
+  id        String    @id @default(uuid())
+  name      String
+  slug      String    @unique
+  imageUrl  String?
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Banner {
+  id        String   @id @default(uuid())
+  title     String
+  subtitle  String?
+  imageUrl  String
+  linkUrl   String?
+  isActive  Boolean  @default(true)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+model Message {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  phone     String?
+  subject   String?
+  message   String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model Order {
+  id             String   @id @default(uuid())
+  customerName   String
+  customerPhone  String
+  deliveryMethod String
+  address        String?
+  itemsJson      String   // Representação stringificada dos produtos selecionados (JSON string)
+  totalPrice     Float
+  status         String   @default("Pendente") // Pendente, Contatado, Concluído
+  createdAt      DateTime @default(now())
+}
+
+model SiteSettings {
+  id             String   @id @default("default")
+  whatsappNumber String   @default("5511999999999")
+  instagramUrl   String   @default("https://instagram.com/sabor.gold")
+  facebookUrl    String?
+  address        String   @default("Av. Europa, 1200 - Jardins, São Paulo - SP")
+  contactEmail   String   @default("contato@saborgold.com")
+  heroTitle      String   @default("MAIS QUE SABOR, UMA EXPERIÊNCIA.")
+  heroSubtitle   String   @default("Descubra a seleção mais refinada de pods premium, essências exclusivas e acessórios de luxo criados para quem busca o extraordinário.")
+  aboutText      String   @default("Nascida do desejo de elevar o lifestyle vape ao patamar do puro luxo, a Sabor Gold combina sofisticação estética, curadoria implacável e o compromisso de entregar sabores extraordinários. Cada detalhe, desde nossas embalagens até nossa seleção de marcas importadas, reflete o bom gosto e a exclusividade que definem nossos clientes.")
+  updatedAt      DateTime @updatedAt
+}
