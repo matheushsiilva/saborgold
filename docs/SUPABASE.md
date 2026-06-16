@@ -39,7 +39,10 @@ npx prisma db push
 npm run db:seed
 ```
 
-**Alternativa:** cole o conteúdo de `supabase/migrations/001_initial_schema.sql` no **SQL Editor** do Supabase e execute manualmente.
+**Alternativa (SQL Editor):** execute em ordem:
+
+1. `supabase/migrations/001_initial_schema.sql`
+2. `supabase/migrations/002_platform_v2.sql` (regiões, marcas, sabores, usuários)
 
 ## 4. Deploy na Vercel
 

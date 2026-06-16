@@ -15,8 +15,8 @@ export default function Benefits() {
     },
     {
       icon: <Headset className="w-6 h-6 text-gold" />,
-      title: 'Atendimento VIP',
-      desc: 'Suporte humanizado e ágil diretamente no WhatsApp, auxiliando você na escolha e finalização.',
+      title: 'WhatsApp Direto',
+      desc: 'Clique no produto e fale instantaneamente no WhatsApp. Sem formulários, sem espera.',
     },
     {
       icon: <ShieldCheck className="w-6 h-6 text-gold" />,

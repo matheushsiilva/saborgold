@@ -8,157 +8,158 @@ const prisma = new PrismaClient({
 });
 
 async function main() {
-  console.log('🌟 Seeding Sabor Gold database...');
+  console.log('🌟 Seeding Sabor Gold (plataforma completa)...');
 
-  const categories = await Promise.all([
-    prisma.category.upsert({
-      where: { slug: 'pods-descartaveis' },
+  const regions = await Promise.all([
+    prisma.region.upsert({
+      where: { slug: 'porto-alegre-viamao-alvorada-guaiba-eldorado' },
       update: {},
-      create: { name: 'Pods Descartáveis', slug: 'pods-descartaveis' },
+      create: {
+        name: 'Porto Alegre, Viamão, Alvorada, Guaiba, Eldorado',
+        slug: 'porto-alegre-viamao-alvorada-guaiba-eldorado',
+        state: 'RS',
+      },
     }),
-    prisma.category.upsert({
-      where: { slug: 'essencias' },
+    prisma.region.upsert({
+      where: { slug: 'novo-hamburgo-e-outras-cidades' },
       update: {},
-      create: { name: 'Essências', slug: 'essencias' },
-    }),
-    prisma.category.upsert({
-      where: { slug: 'acessorios' },
-      update: {},
-      create: { name: 'Acessórios', slug: 'acessorios' },
-    }),
-    prisma.category.upsert({
-      where: { slug: 'kits' },
-      update: {},
-      create: { name: 'Kits Completos', slug: 'kits' },
-    }),
-    prisma.category.upsert({
-      where: { slug: 'lancamentos' },
-      update: {},
-      create: { name: 'Lançamentos', slug: 'lancamentos' },
+      create: {
+        name: 'Novo Hamburgo e outras cidades',
+        slug: 'novo-hamburgo-e-outras-cidades',
+        state: 'RS',
+      },
     }),
   ]);
 
-  const [pods, essencias, kits, lancamentos] = categories;
-
-  const products = [
-    {
-      name: 'Ignite V50 — Strawberry Kiwi',
-      description: 'Sabor refrescante e doce. Até 5000 puffs. Edição premium importada.',
-      price: 129.9,
-      imageUrl: 'pods-ignite-v50',
-      categoryId: pods.id,
-      isFeatured: true,
-      isBestSeller: true,
+  // Clean up any other regions that might exist
+  await prisma.region.deleteMany({
+    where: {
+      slug: {
+        notIn: [
+          'porto-alegre-viamao-alvorada-guaiba-eldorado',
+          'novo-hamburgo-e-outras-cidades',
+        ],
+      },
     },
+  });
+
+  const elfbar = await prisma.brand.upsert({
+    where: { slug: 'elfbar' },
+    update: {},
+    create: { name: 'ELFBAR', slug: 'elfbar' },
+  });
+  const ignite = await prisma.brand.upsert({
+    where: { slug: 'ignite' },
+    update: {},
+    create: { name: 'IGNITE', slug: 'ignite' },
+  });
+
+  const pods = await prisma.category.upsert({
+    where: { slug: 'pods' },
+    update: { name: 'Pods' },
+    create: { name: 'Pods', slug: 'pods' },
+  });
+  const vape = await prisma.category.upsert({
+    where: { slug: 'vape' },
+    update: { name: 'Vape' },
+    create: { name: 'Vape', slug: 'vape' },
+  });
+
+  const samples = [
     {
-      name: 'Elf Bar BC5000 — Watermelon Ice',
-      description: 'Melancia gelada intensa. Recarregável USB-C. Design minimalista dourado.',
-      price: 119.9,
+      name: 'ELFBAR 15K',
+      description: 'Pod descartável premium · 15.000 puffs',
+      price: 129.9,
       imageUrl: 'pods-elf-bar',
       categoryId: pods.id,
-      isBestSeller: true,
+      brandId: elfbar.id,
+      badge: 'LANÇAMENTO',
+      flavors: [
+        { name: 'KIWI PASSION FRUIT GUAVA', description: 'Kiwi, Maracujá e Goiaba' },
+        { name: 'WATERMELON ICE', description: 'Melancia gelada refrescante' },
+        { name: 'BLUE RAZZ ICE', description: 'Framboesa azul com mentol' },
+      ],
     },
     {
-      name: 'Zomo — Strong Grape Mint',
-      description: 'Essência premium 50g. Uva com menta intensa. Importação direta.',
+      name: 'IGNITE V80',
+      description: 'Pod recarregável · Tela digital · Luxo',
+      price: 149.9,
+      imageUrl: 'pods-ignite-v50',
+      categoryId: pods.id,
+      brandId: ignite.id,
+      badge: 'PROMOÇÃO',
+      flavors: [
+        { name: 'STRAWBERRY KIWI', description: 'Morango e Kiwi tropical' },
+        { name: 'MENTHOL', description: 'Mentol puro intenso' },
+      ],
+    },
+    {
+      name: 'IGNITE V50',
+      description: 'Compacto e potente · Edição Gold',
+      price: 119.9,
+      imageUrl: 'pods-ignite-v50',
+      categoryId: pods.id,
+      brandId: ignite.id,
+      isBestSeller: true,
+      flavors: [{ name: 'GRAPE ICE', description: 'Uva gelada premium' }],
+    },
+    {
+      name: 'Zomo Strong 50g',
+      description: 'Essência importada para narguilé',
       price: 89.9,
       imageUrl: 'essencia-zomo-grape',
-      categoryId: essencias.id,
-      isFeatured: true,
-      isBestSeller: true,
-    },
-    {
-      name: 'Tangiers — Cane Mint',
-      description: 'A essência mais cobiçada do mundo. Sabor menta pura e refrescante.',
-      price: 149.9,
-      imageUrl: 'essencia-tangiers-mint',
-      categoryId: essencias.id,
-      isBestSeller: true,
-    },
-    {
-      name: 'Vaporesso XROS 3 — Kit Gold Edition',
-      description: 'Pod system premium com acabamento dourado. Bateria 1000mAh. Ajuste de airflow.',
-      price: 249.9,
-      imageUrl: 'kit-vaporesso-xros',
-      categoryId: kits.id,
-      isFeatured: true,
-    },
-    {
-      name: 'Caliburn G3 — Kit Luxo',
-      description: 'O kit mais vendido do mercado premium. Tela OLED. Carregamento rápido.',
-      price: 199.9,
-      imageUrl: 'kit-caliburn-g3',
-      categoryId: kits.id,
-      isBestSeller: true,
-    },
-    {
-      name: 'Lost Mary OS5000 — Blue Razz Ice',
-      description: 'Lançamento exclusivo 2026. Design ergonômico com glow dourado na base.',
-      price: 134.9,
-      imageUrl: 'pods-lost-mary',
-      categoryId: lancamentos.id,
-      isFeatured: true,
-      isBestSeller: true,
-    },
-    {
-      name: 'Carregador Magnético Gold',
-      description: 'Carregador wireless magnético com acabamento dourado escovado.',
-      price: 79.9,
-      imageUrl: 'acessorio-carregador',
-      categoryId: categories[2].id,
+      categoryId: vape.id,
+      badge: null,
+      flavors: [{ name: 'GRAPE MINT', description: 'Uva com menta intensa' }],
     },
   ];
 
-  for (const p of products) {
-    const existing = await prisma.product.findFirst({ where: { name: p.name } });
-    if (!existing) {
-      await prisma.product.create({ data: p });
-    }
-  }
+  for (const s of samples) {
+    const exists = await prisma.product.findFirst({ where: { name: s.name } });
+    if (exists) continue;
 
-  const bannerCount = await prisma.banner.count();
-  if (bannerCount === 0) {
-    await prisma.banner.createMany({
-      data: [
-        {
-          title: 'MAIS QUE SABOR, UMA EXPERIÊNCIA.',
-          subtitle:
-            'Descubra a seleção mais refinada de pods premium, essências exclusivas e acessórios de luxo.',
-          imageUrl: 'gradient:gold',
-          linkUrl: '/catalogo',
-          isActive: true,
-          order: 0,
+    await prisma.product.create({
+      data: {
+        name: s.name,
+        description: s.description,
+        price: s.price,
+        imageUrl: s.imageUrl,
+        categoryId: s.categoryId,
+        brandId: s.brandId,
+        badge: s.badge,
+        isBestSeller: !!(s as { isBestSeller?: boolean }).isBestSeller,
+        flavors: {
+          create: s.flavors.map((f, i) => ({
+            name: f.name,
+            description: f.description,
+            order: i,
+          })),
         },
-        {
-          title: 'LANÇAMENTOS EXCLUSIVOS 2026',
-          subtitle: 'Novidades importadas com estoque limitado. Garanta o seu antes que acabe.',
-          imageUrl: 'gradient:dark',
-          linkUrl: '/catalogo?categoria=lancamentos',
-          isActive: true,
-          order: 1,
+        regions: {
+          create: regions.map((r) => ({ regionId: r.id, inStock: true })),
         },
-      ],
+      },
     });
   }
 
   await prisma.siteSettings.upsert({
     where: { id: 'default' },
-    update: {},
+    update: {
+      heroSubtitle: 'Selecione sua região e explore pods ELFBAR, IGNITE e muito mais.',
+    },
     create: {
       id: 'default',
       whatsappNumber: '5511999999999',
       instagramUrl: 'https://instagram.com/sabor.gold',
-      address: 'Av. Europa, 1200 - Jardins, São Paulo - SP',
-      contactEmail: 'contato@saborgold.com',
       heroTitle: 'MAIS QUE SABOR, UMA EXPERIÊNCIA.',
-      heroSubtitle:
-        'Descubra a seleção mais refinada de pods premium, essências exclusivas e acessórios de luxo criados para quem busca o extraordinário.',
-      aboutText:
-        'Nascida do desejo de elevar o lifestyle vape ao patamar do puro luxo, a Sabor Gold combina sofisticação estética, curadoria implacável e o compromisso de entregar sabores extraordinários.',
+      heroSubtitle: 'Selecione sua região e explore pods ELFBAR, IGNITE e muito mais.',
+      aboutText: 'Sabor Gold — plataforma premium de vapes e pods.',
+      address: 'São Paulo - SP',
+      contactEmail: 'contato@saborgold.com',
     },
   });
 
-  console.log('✅ Seed concluído com sucesso!');
+  console.log('✅ Seed concluído: regiões, marcas ELFBAR/IGNITE, produtos com sabores');
 }
 
 main()
@@ -166,6 +167,4 @@ main()
     console.error(e);
     process.exit(1);
   })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
+  .finally(() => prisma.$disconnect());

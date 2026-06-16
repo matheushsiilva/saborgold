@@ -12,16 +12,18 @@
   --color-dark-bg: #050505;
   --color-dark-panel: #121212;
   --color-dark-panel-hover: #1A1A1A;
+  --color-light-bg: #FAFAFA;
+  --color-light-panel: #FFFFFF;
 }
 
 :root {
-  --background: #050505;
-  --foreground: #ffffff;
+  --background: #FAFAFA;
+  --foreground: #111111;
 }
 
 body {
-  background-color: #050505;
-  color: #ffffff;
+  background-color: #FAFAFA;
+  color: #111111;
   font-family: "Montserrat", sans-serif;
 }
 
@@ -69,7 +71,7 @@ body {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #050505;
+  background: #E5E5E5;
 }
 ::-webkit-scrollbar-thumb {
   background: #D4AF37;
@@ -133,4 +135,18 @@ body {
 .reveal-on-scroll.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Futuristic grid glow on catalog */
+.catalog-grid-glow {
+  background-image: radial-gradient(rgba(212, 175, 55, 0.04) 1px, transparent 1px);
+  background-size: 24px 24px;
 }

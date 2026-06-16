@@ -1,13 +1,19 @@
-# Sabor Gold — Site Premium Vape & Lifestyle
+# Sabor Gold — Plataforma Vapes Premium
 
-Site profissional completo para a marca **Sabor Gold**, com identidade visual premium dark (preto fosco + dourado metálico), catálogo dinâmico, integração WhatsApp e painel administrativo.
+E-commerce web para a marca **Sabor Gold**, com identidade dark + dourado, seleção de região, catálogo por marca (ELFBAR, IGNITE, etc.), sabores por produto e pedidos via **WhatsApp**.
+
+## Fluxo do site
+
+1. **`/`** — Landing: escolha da cidade/região
+2. **`/catalogo`** — Grade de produtos filtrados por região e marca
+3. **`/entrar`** — Login simplificado (WhatsApp ou e-mail)
+4. **`/admin`** — Painel para regiões, marcas, produtos, banners e configurações
 
 ## Stack
 
-- **Next.js 16** + React 19
-- **Tailwind CSS 4**
-- **Prisma 7** + SQLite (dev) / PostgreSQL Supabase (produção)
-- **Framer Motion** — animações premium
+- **Next.js 16** + React 19 + Tailwind CSS 4
+- **Prisma 7** — SQLite (dev) ou **PostgreSQL / Supabase** (produção)
+- **Framer Motion** — microinterações premium
 
 ## Início rápido
 
@@ -18,84 +24,59 @@ npm run db:seed
 npm run dev
 ```
 
-Acesse:
-- Site: [http://localhost:3000](http://localhost:3000)
-- Catálogo: [http://localhost:3000/catalogo](http://localhost:3000/catalogo)
-- Admin: [http://localhost:3000/admin](http://localhost:3000/admin)
+- Site: http://localhost:3000  
+- Catálogo: http://localhost:3000/catalogo  
+- Admin: http://localhost:3000/admin  
 
 **Login admin:** `admin` ou `saborgold2026`
 
-## Logo & Brand Assets
+## Logo
 
-Arquivos em `public/brand/`:
+O logo oficial está em `public/brand/logo-sabor-gold.png` e é usado em todo o site via componente `Logo`.
 
-| Arquivo | Uso |
-|---------|-----|
-| `logo-icon-gold.svg` | Ícone / favicon / Instagram |
-| `logo-horizontal-gold.svg` | Header, banners |
-| `logo-vertical-gold.svg` | Embalagens, stories |
-| `logo-horizontal-white.svg` | Fundos escuros alternativos |
-| `logo-monochrome.svg` | Impressão P&B |
-| `logo-mockup.svg` | Apresentação da marca |
+## Supabase (produção)
 
-Mockup visual: abra `/brand/logo-mockup.svg` no navegador.
-
-## Supabase (Produção)
-
-1. Crie um projeto em [supabase.com](https://supabase.com)
-2. Copie a connection string (Settings → Database)
+1. Crie o projeto em [supabase.com](https://supabase.com)
+2. No SQL Editor, execute em ordem:
+   - `supabase/migrations/001_initial_schema.sql`
+   - `supabase/migrations/002_platform_v2.sql`
 3. Configure `.env`:
 
 ```env
 DATABASE_URL="postgresql://..."
 ```
 
-4. Para PostgreSQL, altere `prisma/schema.prisma`:
-
-```prisma
-datasource db {
-  provider = "postgresql"
-}
-```
-
-5. Aplique o schema:
+4. Em `prisma/schema.prisma`, use `provider = "postgresql"`
+5. Aplique dados:
 
 ```bash
 npx prisma db push
 npm run db:seed
 ```
 
-Ou execute o SQL em `supabase/migrations/001_initial_schema.sql` no SQL Editor do Supabase.
+Detalhes: [docs/SUPABASE.md](docs/SUPABASE.md) · Push GitHub: [docs/GITHUB-PUSH.md](docs/GITHUB-PUSH.md)
 
-## Painel Admin
+## Painel admin
 
-Gerencie em `/admin`:
+- **Regiões** — cidades com estoque regional
+- **Marcas** — filtros dinâmicos no catálogo (ex.: ELFBAR, IGNITE)
+- **Produtos** — preço, badge (LANÇAMENTO / PROMOÇÃO), sabores (`nome|descrição` por linha), estoque por região
+- **Banners** e **Configurações** — WhatsApp, textos do site
 
-- Produtos (CRUD, upload de imagem, destaques)
-- Categorias
-- Banners promocionais (carrossel hero)
-- Pedidos WhatsApp
-- Mensagens de contato
-- Configurações do site (textos, WhatsApp, Instagram, endereço)
+Configure o número de WhatsApp em **Admin → Configurações** antes de publicar.
+
+## APIs principais
+
+| Rota | Uso |
+|------|-----|
+| `GET /api/regions` | Lista regiões ativas |
+| `GET /api/brands` | Marcas para filtros |
+| `GET /api/products?regiao=&marca=&busca=` | Catálogo regional |
+| `POST /api/auth` | Login WhatsApp/e-mail |
+| `GET/POST /api/settings` | WhatsApp e textos |
 
 ## Deploy (Vercel)
 
-1. Conecte o repositório [github.com/matheushsiilva/saborgold](https://github.com/matheushsiilva/saborgold)
-2. Configure `DATABASE_URL` com Supabase
-3. Build command: `npm run build`
-4. Variáveis: `DATABASE_URL`, opcional `ADMIN_PASSWORD`
-
-## Estrutura
-
-```
-src/
-  app/          # Páginas e API routes
-  components/   # UI premium (Header, Hero, Catálogo...)
-  context/      # Carrinho + WhatsApp
-  lib/          # Prisma client
-prisma/         # Schema + seed
-public/brand/   # Logos SVG
-supabase/       # Migrations SQL
-```
-
-© Sabor Gold Co. — Todos os direitos reservados.
+1. Push do repositório GitHub (conta com acesso ao repo)
+2. Variável `DATABASE_URL` do Supabase
+3. `provider = postgresql` no Prisma + `db push` + seed

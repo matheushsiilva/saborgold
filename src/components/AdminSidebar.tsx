@@ -11,6 +11,8 @@ import {
   Settings,
   LogOut,
   ImageIcon,
+  MapPin,
+  Sparkles,
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -24,18 +26,18 @@ export default function AdminSidebar({ activeTab, setActiveTab, handleLogout }: 
     { id: 'dashboard', name: 'Dashboard', icon: <LayoutDashboard className="w-4.5 h-4.5" /> },
     { id: 'produtos', name: 'Produtos', icon: <ShoppingBag className="w-4.5 h-4.5" /> },
     { id: 'categorias', name: 'Categorias', icon: <FolderOpen className="w-4.5 h-4.5" /> },
-    { id: 'banners', name: 'Banners Promo', icon: <ImageIcon className="w-4.5 h-4.5" /> },
-    { id: 'pedidos', name: 'Pedidos WhatsApp', icon: <ClipboardList className="w-4.5 h-4.5" /> },
-    { id: 'mensagens', name: 'Mensagens / Inbox', icon: <MessageSquare className="w-4.5 h-4.5" /> },
-    { id: 'configuracoes', name: 'Configurações Site', icon: <Settings className="w-4.5 h-4.5" /> },
+    { id: 'regioes', name: 'Regiões', icon: <MapPin className="w-4.5 h-4.5" /> },
+    { id: 'marcas', name: 'Marcas', icon: <Sparkles className="w-4.5 h-4.5" /> },
+    { id: 'banners', name: 'Banners', icon: <ImageIcon className="w-4.5 h-4.5" /> },
+    { id: 'configuracoes', name: 'WhatsApp & Site', icon: <Settings className="w-4.5 h-4.5" /> },
   ];
 
   return (
-    <aside className="w-64 bg-[#0A0A0A] border-r border-white/5 flex flex-col justify-between h-screen shrink-0 text-white select-none">
+    <aside className="w-full lg:w-64 bg-[#0A0A0A] border-r border-white/5 flex flex-col justify-between lg:h-screen lg:sticky lg:top-0 shrink-0 text-white select-none">
       
       {/* Top Brand */}
       <div className="p-6 border-b border-white/5 flex flex-col items-center">
-        <Logo variant="icon" size="sm" color="gold" />
+        <Logo size="sm" />
         <span className="font-display font-bold text-xs tracking-[0.2em] text-gold mt-3">
           PAINEL ADMIN
         </span>

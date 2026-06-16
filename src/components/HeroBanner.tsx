@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { ArrowRight, MessageSquare, ChevronLeft, ChevronRight } from 'lucide-react';
-import { useCart } from '@/context/CartContext';
+import { useWhatsapp } from '@/context/WhatsappContext';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface Banner {
@@ -20,7 +20,7 @@ interface SiteSettings {
 }
 
 export default function HeroBanner() {
-  const { whatsappNumber } = useCart();
+  const { openWhatsApp } = useWhatsapp();
   const [banners, setBanners] = useState<Banner[]>([]);
   const [settings, setSettings] = useState<SiteSettings>({
     heroTitle: 'MAIS QUE SABOR, UMA EXPERIÊNCIA.',
@@ -146,21 +146,20 @@ export default function HeroBanner() {
           className="mt-10 flex flex-col sm:flex-row gap-4 w-full sm:w-auto"
         >
           <Link
-            href={activeBanner?.linkUrl || '/catalogo'}
+            href={activeBanner?.linkUrl || '/#produtos'}
             className="group px-8 py-4 bg-gold-gradient hover:opacity-90 active:scale-[0.98] text-black font-display font-bold text-xs tracking-widest rounded-lg flex items-center justify-center gap-2 transition-all shadow-[0_4px_25px_rgba(212,175,55,0.3)] uppercase"
           >
-            VER CATÁLOGO
+            VER PRODUTOS
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
-          <a
-            href={`https://api.whatsapp.com/send?phone=${whatsappNumber}&text=Ol%C3%A1%21+Estou+no+site+da+Sabor+Gold+e+gostaria+de+fazer+um+pedido.`}
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            type="button"
+            onClick={() => openWhatsApp()}
             className="px-8 py-4 border border-gold/40 hover:border-gold hover:bg-gold/5 active:scale-[0.98] text-gold font-display font-bold text-xs tracking-widest rounded-lg flex items-center justify-center gap-2 transition-all uppercase"
           >
             PEDIR NO WHATSAPP
             <MessageSquare className="w-4.5 h-4.5" />
-          </a>
+          </button>
         </motion.div>
 
         {banners.length > 1 && (

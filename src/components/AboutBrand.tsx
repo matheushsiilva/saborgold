@@ -39,7 +39,7 @@ export default function AboutBrand() {
             {/* Box package mockup vector */}
             <div className="relative w-48 h-64 flex flex-col justify-between p-6 bg-black rounded-lg border border-gold/45 shadow-[0_10px_35px_rgba(212,175,55,0.15)] group-hover:scale-105 transition-transform duration-500 z-10">
               <div className="flex justify-between items-start">
-                <Logo variant="icon" size="sm" color="gold" />
+                <Logo size="sm" />
                 <span className="font-sans text-[7px] tracking-[0.2em] text-gold-light/60 uppercase">Edition 2026</span>
               </div>
               
