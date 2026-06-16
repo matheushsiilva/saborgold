@@ -8,8 +8,11 @@ export const metadata: Metadata = {
   keywords: ["vapes premium", "elfbar", "ignite", "pod descartavel", "sabor gold", "vape luxo"],
   authors: [{ name: "Sabor Gold Co." }],
   icons: {
-    icon: "/favicon.png",
-    shortcut: "/favicon.ico",
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.png", type: "image/png" },
+    ],
+    shortcut: "/favicon.svg",
     apple: "/favicon.png",
   },
   openGraph: {
