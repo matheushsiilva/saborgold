@@ -6,7 +6,7 @@ import { Pool } from 'pg';
 const globalForPrisma = global as unknown as { prisma?: PrismaClient };
 
 const dbUrl = process.env.DATABASE_URL || 'file:./dev.db';
-const isPostgres = dbUrl.startsWith('postgresql');
+const isPostgres = dbUrl.startsWith('postgresql') || dbUrl.startsWith('postgres');
 
 function createPrismaClient(): PrismaClient {
   if (!isPostgres) {
