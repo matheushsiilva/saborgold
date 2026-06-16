@@ -20,14 +20,24 @@ export default function Logo({
   className = '',
 }: LogoProps) {
   const h = heights[size];
-  const isIcon = variant === 'icon';
+
+  let src = '/brand/logo-horizontal-gold.svg';
+  let widthMultiplier = 4.0; // 320x80
+
+  if (variant === 'vertical') {
+    src = '/brand/logo-vertical-gold.svg';
+    widthMultiplier = 0.8; // 160x200
+  } else if (variant === 'icon') {
+    src = '/brand/logo-icon-gold.svg';
+    widthMultiplier = 1.0; // 100x100
+  }
 
   return (
     <div className={`relative shrink-0 ${className}`}>
       <Image
-        src="/brand/logo-sabor-gold-v2.png"
+        src={src}
         alt="Sabor Gold"
-        width={isIcon ? h : Math.round(h * 2.2)}
+        width={Math.round(h * widthMultiplier)}
         height={h}
         className="object-contain drop-shadow-[0_0_12px_rgba(212,175,55,0.25)]"
         style={{ width: 'auto', height: h }}
