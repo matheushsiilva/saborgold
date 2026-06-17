@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/db';
+import { deleteFromSupabase } from '@/lib/supabase';
 
 export async function GET(
   request: Request,
@@ -66,6 +67,16 @@ export async function DELETE(
     const existingProduct = await prisma.product.findUnique({ where: { id } });
     if (!existingProduct) {
       return NextResponse.json({ error: 'Product not found' }, { status: 404 });
+    }
+
+    // Delete the product image from Supabase Storage if it exists
+    if (existingProduct.imageUrl) {
+      try {
+        await deleteFromSupabase(existingProduct.imageUrl);
+      } catch (imgErr) {
+        console.error('Failed to delete product image from storage:', imgErr);
+        // Continue with product deletion even if image deletion fails
+      }
     }
 
     await prisma.product.delete({ where: { id } });
