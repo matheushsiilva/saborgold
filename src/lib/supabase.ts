@@ -1,12 +1,34 @@
-import { createClient } from '@supabase/supabase-js';
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-// Use service role key on server for full storage access (bypasses RLS)
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-
-export const supabase = createClient(supabaseUrl, supabaseServiceKey);
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
 export const STORAGE_BUCKET = 'product-images';
+
+let supabaseInstance: SupabaseClient | null = null;
+
+function getSupabaseClient(): SupabaseClient | null {
+  if (supabaseInstance) return supabaseInstance;
+
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  if (!supabaseUrl || !supabaseServiceKey) {
+    // Return null instead of throwing on load. We will check it when calls are made.
+    return null;
+  }
+
+  supabaseInstance = createClient(supabaseUrl, supabaseServiceKey);
+  return supabaseInstance;
+}
+
+// Export a getter/proxy for backward compatibility if needed, or helper functions
+export const supabase = {
+  get storage() {
+    const client = getSupabaseClient();
+    if (!client) {
+      throw new Error('Supabase client not initialized. Check your environment variables.');
+    }
+    return client.storage;
+  }
+};
 
 /**
  * Ensure the storage bucket exists. Called once before first upload.
@@ -15,11 +37,16 @@ let bucketChecked = false;
 async function ensureBucket() {
   if (bucketChecked) return;
 
-  const { data: buckets } = await supabase.storage.listBuckets();
+  const client = getSupabaseClient();
+  if (!client) {
+    throw new Error('Supabase client not initialized. Check your environment variables.');
+  }
+
+  const { data: buckets } = await client.storage.listBuckets();
   const exists = buckets?.some((b) => b.name === STORAGE_BUCKET);
 
   if (!exists) {
-    const { error } = await supabase.storage.createBucket(STORAGE_BUCKET, {
+    const { error } = await client.storage.createBucket(STORAGE_BUCKET, {
       public: true,
       allowedMimeTypes: ['image/jpeg', 'image/png', 'image/webp', 'image/gif'],
       fileSizeLimit: 5 * 1024 * 1024, // 5MB
@@ -43,7 +70,12 @@ export async function uploadToSupabase(
 ): Promise<string> {
   await ensureBucket();
 
-  const { data, error } = await supabase.storage
+  const client = getSupabaseClient();
+  if (!client) {
+    throw new Error('Supabase client not initialized. Check your environment variables.');
+  }
+
+  const { data, error } = await client.storage
     .from(STORAGE_BUCKET)
     .upload(filename, file, {
       contentType,
@@ -54,7 +86,7 @@ export async function uploadToSupabase(
     throw new Error(`Supabase upload error: ${error.message}`);
   }
 
-  const { data: urlData } = supabase.storage
+  const { data: urlData } = client.storage
     .from(STORAGE_BUCKET)
     .getPublicUrl(data.path);
 
@@ -65,8 +97,6 @@ export async function uploadToSupabase(
  * Delete a file from Supabase Storage by its public URL or path.
  */
 export async function deleteFromSupabase(fileUrl: string): Promise<void> {
-  // Extract the file path from the full URL
-  // URL format: https://<project>.supabase.co/storage/v1/object/public/product-images/<filename>
   const bucketPath = `/storage/v1/object/public/${STORAGE_BUCKET}/`;
   const idx = fileUrl.indexOf(bucketPath);
 
@@ -75,9 +105,14 @@ export async function deleteFromSupabase(fileUrl: string): Promise<void> {
     return;
   }
 
+  const client = getSupabaseClient();
+  if (!client) {
+    throw new Error('Supabase client not initialized. Check your environment variables.');
+  }
+
   const filePath = decodeURIComponent(fileUrl.substring(idx + bucketPath.length));
 
-  const { error } = await supabase.storage
+  const { error } = await client.storage
     .from(STORAGE_BUCKET)
     .remove([filePath]);
 
