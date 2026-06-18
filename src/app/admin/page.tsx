@@ -182,10 +182,6 @@ export default function AdminPage() {
 
   const handleProductSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (editingProduct) {
-      alert('Edição completa em breve. Remova e crie novamente se necessário.');
-      return;
-    }
 
     const payload = {
       ...productForm,
@@ -196,8 +192,10 @@ export default function AdminPage() {
     };
 
     try {
-      const res = await fetch('/api/products', {
-        method: 'POST',
+      const url = editingProduct ? `/api/products/${editingProduct.id}` : '/api/products';
+      const method = editingProduct ? 'PUT' : 'POST';
+      const res = await fetch(url, {
+        method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
@@ -225,6 +223,7 @@ export default function AdminPage() {
       }
     } catch (err) {
       console.error(err);
+      alert('Erro de conexão ao salvar produto.');
     }
   };
 

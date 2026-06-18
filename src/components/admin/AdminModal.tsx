@@ -1,6 +1,7 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 interface AdminModalProps {
   title: string;
@@ -15,7 +16,15 @@ export default function AdminModal({
   children,
   maxWidth = 'max-w-2xl',
 }: AdminModalProps) {
-  return (
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
+  return createPortal(
     <div
       className="fixed inset-0 z-[200] flex items-start justify-center overflow-y-auto bg-black/85 p-4 sm:p-6 md:p-8"
       role="dialog"
@@ -36,6 +45,8 @@ export default function AdminModal({
         </div>
         <div className="p-6 overflow-visible">{children}</div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
+
