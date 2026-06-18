@@ -43,9 +43,14 @@ export default function RegionLandingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#FAFAFA] text-[#111] relative overflow-hidden flex flex-col">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(212,175,55,0.08)_0%,transparent_55%)]" />
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23D4AF37\' fill-opacity=\'0.03\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20" />
+    <div className="min-h-screen text-white relative overflow-hidden flex flex-col">
+      {/* Background image */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "url('/fundo_sabor_gold.png')" }}
+      />
+      {/* Dark overlay for readability */}
+      <div className="absolute inset-0 bg-black/50" />
 
       <main className="relative z-10 flex-1 flex flex-col items-center justify-center px-4 py-16 max-w-2xl mx-auto w-full">
         <motion.div
@@ -57,10 +62,10 @@ export default function RegionLandingPage() {
           <span className="font-sans text-[10px] uppercase tracking-[0.4em] text-gold font-bold mb-4">
             Vapes Premium
           </span>
-          <h1 className="font-display text-2xl sm:text-3xl font-bold tracking-[0.15em] uppercase text-[#111]">
+          <h1 className="font-display text-2xl sm:text-3xl font-bold tracking-[0.15em] uppercase text-white">
             Selecione sua região
           </h1>
-          <p className="mt-4 font-sans text-sm text-[#666] font-medium max-w-md leading-relaxed">
+          <p className="mt-4 font-sans text-sm text-white/70 font-medium max-w-md leading-relaxed">
             Exibimos os produtos disponíveis para entrega na sua cidade. Escolha abaixo para acessar o catálogo Sabor Gold.
           </p>
         </motion.div>
@@ -79,33 +84,33 @@ export default function RegionLandingPage() {
                 key={r.id}
                 type="button"
                 onClick={() => selectRegion(r)}
-                className="group flex items-center justify-between p-5 rounded-xl bg-white border border-[#E5E5E5] hover:border-gold hover:shadow-[0_4px_20px_rgba(212,175,55,0.12)] transition-all text-left shadow-sm"
+                className="group flex items-center justify-between p-5 rounded-xl bg-white border border-[#E5E5E5] hover:border-gold hover:shadow-[0_4px_20px_rgba(212,175,55,0.25)] transition-all text-left shadow-sm"
               >
                 <div className="flex items-center gap-3">
                   <div className="p-2.5 rounded-lg bg-gold/10 border border-gold/20">
-                    <MapPin className="w-5 h-5 text-gold-dark" />
+                    <MapPin className="w-5 h-5 text-black" />
                   </div>
                   <div>
-                    <p className="font-display font-bold text-sm tracking-wider text-[#111] group-hover:text-gold-dark transition-colors">
+                    <p className="font-display font-bold text-sm tracking-wider text-black group-hover:text-gold-dark transition-colors">
                       {r.name}
                     </p>
                     {r.state && (
-                      <p className="text-[10px] text-[#888] font-medium uppercase tracking-wider mt-0.5">{r.state}</p>
+                      <p className="text-[10px] text-black/60 font-medium uppercase tracking-wider mt-0.5">{r.state}</p>
                     )}
                   </div>
                 </div>
-                <ArrowRight className="w-5 h-5 text-[#ccc] group-hover:text-gold-dark group-hover:translate-x-1 transition-all" />
+                <ArrowRight className="w-5 h-5 text-black/40 group-hover:text-gold-dark group-hover:translate-x-1 transition-all" />
               </button>
             ))}
             {regions.length === 0 && (
-              <p className="col-span-2 text-center text-[#888] text-sm py-8">
+              <p className="col-span-2 text-center text-white/60 text-sm py-8">
                 Nenhuma região cadastrada. Configure no painel admin.
               </p>
             )}
           </motion.div>
         )}
 
-        <p className="mt-12 text-[9px] text-[#999] font-medium uppercase tracking-[0.3em]">
+        <p className="mt-12 text-[9px] text-white/50 font-medium uppercase tracking-[0.3em]">
           Proibido para menores de 18 anos
         </p>
       </main>
