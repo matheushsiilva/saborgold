@@ -46,11 +46,11 @@ export default function RegionLandingPage() {
     <div className="min-h-screen text-white relative overflow-hidden flex flex-col">
       {/* Background image */}
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        className="fixed inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: "url('/fundo_sabor_gold.png')" }}
       />
       {/* Dark overlay for readability */}
-      <div className="absolute inset-0 bg-black/50" />
+      <div className="fixed inset-0 bg-black/55" />
 
       <main className="relative z-10 flex-1 flex flex-col items-center justify-center px-4 py-16 max-w-2xl mx-auto w-full">
         <motion.div
