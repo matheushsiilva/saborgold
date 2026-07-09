@@ -17,7 +17,7 @@ export default function ProductImage({ imageUrl, name, className = '' }: Product
       <img
         src={imageUrl}
         alt={name}
-        className={`w-full h-full object-cover ${className}`}
+        className={`w-full h-full object-contain ${className}`}
         loading="lazy"
       />
     );
