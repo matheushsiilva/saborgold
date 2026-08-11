@@ -29,10 +29,10 @@ export default function AdminBrands({ brands, onRefresh }: { brands: Brand[]; on
   return (
     <div className="space-y-6 max-w-2xl">
       <div>
-        <h1 className="font-display font-bold text-2xl tracking-widest text-white">MARCAS</h1>
+        <h1 className="font-display font-bold text-xl sm:text-2xl tracking-widest text-white">MARCAS</h1>
         <p className="text-xs text-white/50 mt-1">Filtros do catálogo (ELFBAR, IGNITE, etc.)</p>
       </div>
-      <form onSubmit={handleCreate} className="glassmorphism p-5 rounded-xl border border-white/5 flex gap-2 text-xs">
+      <form onSubmit={handleCreate} className="glassmorphism p-5 rounded-xl border border-white/5 flex flex-col sm:flex-row gap-2 text-xs">
         <input
           required
           value={name}

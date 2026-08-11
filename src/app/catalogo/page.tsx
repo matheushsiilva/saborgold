@@ -85,7 +85,7 @@ export default function CatalogPage() {
             <p className="text-sm text-[#666] mt-2 font-medium">Cadastre produtos no painel admin.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 min-[420px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 pb-[calc(5rem+env(safe-area-inset-bottom,0px))]">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5 pb-[calc(4.5rem+env(safe-area-inset-bottom,0px))]">
             {products.map((p, i) => (
               <ProductCatalogCard key={p.id} product={p} index={i} />
             ))}

@@ -322,7 +322,7 @@ export default function AdminPage() {
   // Lock Screen rendering
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-dark-bg flex items-center justify-center relative p-4 overflow-hidden">
+      <div className="min-h-dvh bg-dark-bg flex items-center justify-center relative p-4 overflow-hidden safe-top safe-bottom">
         {/* Background glow effects */}
         <div className="absolute top-1/4 left-1/4 w-[300px] h-[300px] bg-gold/5 rounded-full filter blur-[80px]" />
         <div className="absolute bottom-1/4 right-1/4 w-[300px] h-[300px] bg-gold/5 rounded-full filter blur-[80px]" />
@@ -394,29 +394,29 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen bg-dark-bg text-white flex flex-col lg:flex-row font-sans">
+    <div className="min-h-dvh bg-dark-bg text-white flex flex-col lg:flex-row font-sans">
       <AdminSidebar
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         handleLogout={handleLogout}
       />
 
-      <main className="flex-1 min-w-0 min-h-screen overflow-y-auto overflow-x-hidden p-4 sm:p-6 lg:p-8 bg-[#050505] pb-24">
+      <main className="flex-1 min-w-0 overflow-y-auto overflow-x-hidden p-4 sm:p-6 lg:p-8 bg-[#050505] pb-8 lg:pb-8 safe-bottom">
         
         {/* Tab 1: Dashboard Overview */}
         {activeTab === 'dashboard' && (
-          <div className="space-y-8 animate-fade-in">
+          <div className="space-y-6 sm:space-y-8 animate-fade-in">
             {/* Header */}
             <div>
-              <h1 className="font-display font-bold text-2xl tracking-widest text-white">DASHBOARD</h1>
-              <p className="font-sans text-xs text-white/50">Visão geral do desempenho e atividades do site Sabor Gold.</p>
+              <h1 className="font-display font-bold text-xl sm:text-2xl tracking-widest text-white">DASHBOARD</h1>
+              <p className="font-sans text-xs text-white/50 mt-1">Visão geral do desempenho e atividades do site Sabor Gold.</p>
             </div>
 
             {/* Metrics cards grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-6">
               
               {/* Card 1 */}
-              <div className="p-6 glassmorphism rounded-xl border border-white/5 space-y-4">
+              <div className="p-4 sm:p-6 glassmorphism rounded-xl border border-white/5 space-y-3 sm:space-y-4">
                 <div className="flex justify-between items-center">
                   <span className="text-[10px] uppercase tracking-wider font-semibold text-white/50">Total Produtos</span>
                   <ShoppingBag className="w-5 h-5 text-gold" />
@@ -427,7 +427,7 @@ export default function AdminPage() {
                 </div>
               </div>
 
-              <div className="p-6 glassmorphism rounded-xl border border-white/5 space-y-4">
+              <div className="p-4 sm:p-6 glassmorphism rounded-xl border border-white/5 space-y-3 sm:space-y-4">
                 <div className="flex justify-between items-center">
                   <span className="text-[10px] uppercase tracking-wider font-semibold text-white/50">Regiões</span>
                   <Sparkles className="w-5 h-5 text-gold" />
@@ -435,7 +435,7 @@ export default function AdminPage() {
                 <span className="text-2xl font-bold font-display">{regions.length}</span>
               </div>
 
-              <div className="p-6 glassmorphism rounded-xl border border-white/5 space-y-4">
+              <div className="p-4 sm:p-6 glassmorphism rounded-xl border border-white/5 space-y-3 sm:space-y-4">
                 <div className="flex justify-between items-center">
                   <span className="text-[10px] uppercase tracking-wider font-semibold text-white/50">Marcas</span>
                   <Coins className="w-5 h-5 text-gold" />
@@ -455,12 +455,12 @@ export default function AdminPage() {
 
         {/* Tab 2: Products Manager */}
         {activeTab === 'produtos' && (
-          <div className="space-y-8 animate-fade-in">
+          <div className="space-y-6 sm:space-y-8 animate-fade-in">
             {/* Header */}
-            <div className="flex justify-between items-end">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4">
               <div>
-                <h1 className="font-display font-bold text-2xl tracking-widest text-white">PRODUTOS</h1>
-                <p className="font-sans text-xs text-white/50">Gerencie e edite os itens do catálogo Sabor Gold.</p>
+                <h1 className="font-display font-bold text-xl sm:text-2xl tracking-widest text-white">PRODUTOS</h1>
+                <p className="font-sans text-xs text-white/50 mt-1">Gerencie e edite os itens do catálogo Sabor Gold.</p>
               </div>
               <button
                 onClick={() => {
@@ -481,15 +481,65 @@ export default function AdminPage() {
                   });
                   setIsProductModalOpen(true);
                 }}
-                className="bg-gold-gradient text-black font-display font-bold text-xs tracking-wider px-4 py-3 rounded-lg flex items-center gap-1.5 hover:opacity-90 transition-all uppercase"
+                className="w-full sm:w-auto bg-gold-gradient text-black font-display font-bold text-xs tracking-wider px-4 py-3 rounded-lg flex items-center justify-center gap-1.5 hover:opacity-90 transition-all uppercase touch-manipulation"
               >
-                <Plus className="w-4.5 h-4.5" /> Adicionar Produto
+                <Plus className="w-4 h-4" /> Adicionar Produto
               </button>
             </div>
 
-            {/* Products Table */}
-            <div className="glassmorphism rounded-xl border border-white/5 overflow-hidden">
-              <table className="w-full text-left text-xs border-collapse">
+            {/* Mobile: product cards */}
+            <div className="lg:hidden space-y-3">
+              {products.map((prod) => (
+                <div
+                  key={prod.id}
+                  className="glassmorphism rounded-xl border border-white/5 p-4 flex gap-3"
+                >
+                  <div className="w-16 h-16 shrink-0 rounded-lg overflow-hidden bg-white/5">
+                    <ProductImage imageUrl={prod.imageUrl} name={prod.name} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-bold text-white text-sm truncate">{prod.name}</p>
+                    <p className="text-[10px] text-white/50 mt-0.5">{prod.category?.name || 'Sem Categoria'}</p>
+                    <div className="flex items-center justify-between mt-2 gap-2">
+                      <span className="font-bold text-gold text-sm">R$ {prod.price.toFixed(2)}</span>
+                      <span
+                        className={`px-2 py-0.5 rounded text-[8px] font-bold uppercase tracking-wider shrink-0 ${
+                          prod.inStock
+                            ? 'bg-green-500/10 text-green-400 border border-green-500/20'
+                            : 'bg-red-500/10 text-red-500 border border-red-500/20'
+                        }`}
+                      >
+                        {prod.inStock ? 'Disponível' : 'Esgotado'}
+                      </span>
+                    </div>
+                    <div className="flex gap-2 mt-3">
+                      <button
+                        type="button"
+                        onClick={() => startEditProduct(prod)}
+                        className="flex-1 py-2 rounded-lg border border-white/10 text-white/70 hover:text-gold hover:border-gold/30 text-[10px] font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 touch-manipulation"
+                      >
+                        <Edit className="w-3.5 h-3.5" /> Editar
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => deleteProduct(prod.id)}
+                        className="py-2 px-3 rounded-lg border border-white/10 text-white/70 hover:text-red-400 hover:border-red-500/30 touch-manipulation"
+                        aria-label="Remover"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+              {products.length === 0 && (
+                <p className="text-center text-white/40 text-sm py-8">Nenhum produto cadastrado.</p>
+              )}
+            </div>
+
+            {/* Desktop: products table */}
+            <div className="hidden lg:block glassmorphism rounded-xl border border-white/5 overflow-x-auto">
+              <table className="w-full text-left text-xs border-collapse min-w-[640px]">
                 <thead>
                   <tr className="text-white/40 border-b border-white/5 bg-white/[0.01]">
                     <th className="p-4 uppercase tracking-wider font-semibold">Foto</th>
@@ -554,7 +604,7 @@ export default function AdminPage() {
         {activeTab === 'categorias' && (
           <div className="space-y-6 animate-fade-in max-w-2xl">
             <div>
-              <h1 className="font-display font-bold text-2xl tracking-widest text-white">CATEGORIAS</h1>
+              <h1 className="font-display font-bold text-xl sm:text-2xl tracking-widest text-white">CATEGORIAS</h1>
               <p className="font-sans text-xs text-white/50 mt-1">
                 O site usa apenas duas categorias fixas: <strong className="text-gold">Pods</strong> e{' '}
                 <strong className="text-gold">Vape</strong> (essências entram em Vape).
@@ -591,10 +641,10 @@ export default function AdminPage() {
 
         {/* Tab: Site Settings Panel */}
         {activeTab === 'configuracoes' && (
-          <div className="space-y-8 animate-fade-in max-w-3xl">
+          <div className="space-y-6 sm:space-y-8 animate-fade-in max-w-3xl">
             {/* Header */}
             <div>
-              <h1 className="font-display font-bold text-2xl tracking-widest text-white">CONFIGURAÇÕES</h1>
+              <h1 className="font-display font-bold text-xl sm:text-2xl tracking-widest text-white">CONFIGURAÇÕES</h1>
               <p className="font-sans text-xs text-white/50">Edite as informações gerais e os textos principais do site.</p>
             </div>
 

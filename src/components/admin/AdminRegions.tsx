@@ -43,7 +43,7 @@ export default function AdminRegions({
   return (
     <div className="space-y-6 max-w-2xl">
       <div>
-        <h1 className="font-display font-bold text-2xl tracking-widest text-white">REGIÕES</h1>
+        <h1 className="font-display font-bold text-xl sm:text-2xl tracking-widest text-white">REGIÕES</h1>
         <p className="text-xs text-white/50 mt-1">Cidades exibidas na tela inicial do site.</p>
       </div>
       <form onSubmit={handleCreate} className="glassmorphism p-5 rounded-xl border border-white/5 space-y-3 text-xs">

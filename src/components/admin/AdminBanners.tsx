@@ -115,7 +115,7 @@ export default function AdminBanners({ banners, onRefresh }: AdminBannersProps) 
     <div className="space-y-8 animate-fade-in">
       <div className="flex justify-between items-end">
         <div>
-          <h1 className="font-display font-bold text-2xl tracking-widest text-white">BANNERS</h1>
+          <h1 className="font-display font-bold text-xl sm:text-2xl tracking-widest text-white">BANNERS</h1>
           <p className="font-sans text-xs text-white/50">Gerencie os banners promocionais do carrossel hero.</p>
         </div>
         <button

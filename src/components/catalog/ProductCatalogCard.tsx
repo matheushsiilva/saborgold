@@ -52,19 +52,18 @@ export default function ProductCatalogCard({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: index * 0.05 }}
-      className="group flex flex-col rounded-2xl overflow-hidden border border-[#E5E5E5] bg-white shadow-sm hover:border-gold hover:shadow-[0_8px_30px_rgba(212,175,55,0.15)] transition-all duration-500"
+      className="group flex flex-col rounded-xl sm:rounded-2xl overflow-hidden border border-[#E5E5E5] bg-white shadow-sm hover:border-gold hover:shadow-[0_8px_30px_rgba(212,175,55,0.15)] transition-all duration-500"
     >
-      <div className="relative aspect-square overflow-hidden bg-[#FAFAFA] p-3 sm:p-4 flex items-center justify-center">
+      <div className="relative aspect-square overflow-hidden bg-[#FAFAFA] p-2 sm:p-4 flex items-center justify-center">
         <ProductImage
           imageUrl={product.imageUrl}
           name={product.name}
           className="group-hover:scale-105 transition-transform duration-700 mix-blend-multiply"
         />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(212,175,55,0.12),transparent_60%)] opacity-0 group-hover:opacity-100 transition-opacity" />
 
         {product.badge && (
           <span
-            className={`absolute top-2 left-2 sm:top-3 sm:left-3 px-2 py-0.5 sm:px-2.5 sm:py-1 text-[8px] sm:text-[9px] font-bold uppercase tracking-widest rounded ${
+            className={`absolute top-1.5 left-1.5 sm:top-3 sm:left-3 px-1.5 py-0.5 text-[7px] sm:text-[8px] font-bold uppercase tracking-widest rounded ${
               product.badge === 'LANÇAMENTO'
                 ? 'bg-gold-gradient text-black'
                 : 'bg-red-600/90 text-white border border-red-400/30'
@@ -74,40 +73,38 @@ export default function ProductCatalogCard({
           </span>
         )}
         {product.brand && (
-          <span className="absolute top-2 right-2 sm:top-3 sm:right-3 px-2 py-0.5 bg-black/70 border border-gold/20 text-[8px] sm:text-[9px] text-gold font-bold uppercase tracking-wider rounded max-w-[45%] truncate">
+          <span className="absolute top-1.5 right-1.5 sm:top-3 sm:right-3 px-1.5 py-0.5 bg-black/70 border border-gold/20 text-[7px] sm:text-[8px] text-gold font-bold uppercase tracking-wider rounded max-w-[50%] truncate">
             {product.brand.name}
           </span>
         )}
       </div>
 
-      <div className="p-3.5 sm:p-5 flex flex-col flex-1 gap-3 sm:gap-4 justify-between">
-        <div className="flex flex-col gap-1">
-          <h3 className="font-display text-sm sm:text-base font-bold tracking-wide text-[#111] group-hover:text-gold-dark transition-colors line-clamp-2">
+      <div className="p-2.5 sm:p-5 flex flex-col flex-1 gap-2 sm:gap-4">
+        <div>
+          <h3 className="font-display text-[11px] sm:text-base font-bold tracking-wide text-[#111] group-hover:text-gold-dark transition-colors line-clamp-2 leading-tight">
             {product.name}
           </h3>
           {product.description && (
-            <p className="font-sans text-[11px] sm:text-xs text-[#666] line-clamp-2 leading-snug">
+            <p className="font-sans text-[10px] sm:text-xs text-[#666] line-clamp-1 sm:line-clamp-2 mt-0.5 leading-snug hidden sm:block">
               {product.description}
             </p>
           )}
         </div>
 
-        <p className="font-display text-xl sm:text-2xl font-bold text-gold-dark">
+        <p className="font-display text-base sm:text-2xl font-bold text-gold-dark">
           R$ {product.price.toFixed(2)}
         </p>
 
         {hasFlavors && (
           <div className="relative">
-            <label className="text-[9px] sm:text-[10px] uppercase tracking-widest text-[#888] font-semibold mb-1.5 block">
-              Escolha o sabor
-            </label>
             <div className="relative">
               <select
                 value={selectedFlavorId}
                 onChange={(e) => setSelectedFlavorId(e.target.value)}
-                className="w-full appearance-none bg-[#FAFAFA] border border-[#E5E5E5] hover:border-gold/50 focus:border-gold rounded-lg py-2.5 sm:py-3 pl-3 pr-9 text-sm sm:text-xs text-[#111] outline-none transition-colors min-h-[44px]"
+                aria-label="Escolha o sabor"
+                className="w-full appearance-none bg-[#FAFAFA] border border-[#E5E5E5] hover:border-gold/50 focus:border-gold rounded-lg py-2 pl-2 pr-7 text-[11px] sm:text-xs text-[#111] outline-none transition-colors"
               >
-                <option value="">Selecione...</option>
+                <option value="">Sabor...</option>
                 {flavors.map((f) => (
                   <option key={f.id} value={f.id} disabled={!f.inStock}>
                     {f.name}
@@ -115,13 +112,8 @@ export default function ProductCatalogCard({
                   </option>
                 ))}
               </select>
-              <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gold-dark pointer-events-none" />
+              <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gold-dark pointer-events-none" />
             </div>
-            {selectedFlavor?.description && (
-              <p className="mt-1.5 text-[10px] sm:text-[11px] text-[#666] leading-relaxed italic border-l-2 border-gold/50 pl-2 line-clamp-2">
-                {selectedFlavor.description}
-              </p>
-            )}
           </div>
         )}
 
@@ -129,18 +121,18 @@ export default function ProductCatalogCard({
           type="button"
           disabled={!canOrder}
           onClick={handleOrder}
-          className={`w-full min-h-[44px] py-3 sm:py-3.5 rounded-xl font-display font-bold text-[10px] sm:text-xs tracking-[0.15em] sm:tracking-[0.18em] uppercase flex items-center justify-center gap-2 transition-all touch-manipulation ${
+          className={`w-full mt-auto py-2.5 sm:py-3.5 rounded-lg sm:rounded-xl font-display font-bold text-[9px] sm:text-xs tracking-[0.12em] sm:tracking-[0.18em] uppercase flex items-center justify-center gap-1 sm:gap-2 transition-all touch-manipulation ${
             canOrder
               ? 'bg-gold-gradient text-black shadow-[0_4px_24px_rgba(212,175,55,0.25)] hover:opacity-95 active:scale-[0.98]'
               : 'bg-[#F5F5F5] text-[#999] border border-[#E5E5E5] cursor-not-allowed'
           }`}
         >
-          <Sparkles className="w-4 h-4 shrink-0" />
+          <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" />
           {!product.inStock
-            ? 'Indisponível'
+            ? 'Esgotado'
             : hasFlavors && !selectedFlavorId
-              ? 'Escolha o sabor'
-              : 'Pedir no WhatsApp'}
+              ? 'Sabor'
+              : 'WhatsApp'}
         </button>
       </div>
     </motion.article>
