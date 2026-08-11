@@ -124,14 +124,23 @@ export default function AdminPage() {
   };
 
   // Auth Handler
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === 'admin' || password === 'saborgold2026') {
-      sessionStorage.setItem('sabor_gold_admin_session', 'active');
-      setIsAuthenticated(true);
-      setAuthError('');
-    } else {
-      setAuthError('Chave de acesso inválida.');
+    setAuthError('');
+    try {
+      const res = await fetch('/api/admin/auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password }),
+      });
+      if (res.ok) {
+        sessionStorage.setItem('sabor_gold_admin_session', 'active');
+        setIsAuthenticated(true);
+      } else {
+        setAuthError('Chave de acesso inválida.');
+      }
+    } catch {
+      setAuthError('Erro de conexão. Tente novamente.');
     }
   };
 

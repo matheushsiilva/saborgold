@@ -28,7 +28,7 @@ npm run dev
 - Catálogo: http://localhost:3000/catalogo  
 - Admin: http://localhost:3000/admin  
 
-**Login admin:** `admin` ou `saborgold2026`
+**Login admin:** use a senha definida em `ADMIN_PASSWORD` no `.env` (padrão no seed: `saborgold2026`)
 
 ## Logo
 

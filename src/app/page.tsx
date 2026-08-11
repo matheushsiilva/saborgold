@@ -49,15 +49,16 @@ export default function RegionLandingPage() {
   return (
     <>
       <PageBackground color="#050505" />
-      <div className="min-h-dvh text-white relative overflow-x-hidden flex flex-col bg-[#050505]">
-      {/* Background — absolute avoids iOS Safari fixed-bg jank */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat -z-10"
-        style={{ backgroundImage: "url('/fundo_sabor_gold.png')" }}
-      />
-      <div className="absolute inset-0 bg-black/55 -z-10" />
+      <div className="min-h-dvh text-white relative overflow-x-hidden flex flex-col">
+        {/* Imagem de fundo — z-0 (não usar -z-10: fica atrás do bg do pai) */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: "url('/fundo_sabor_gold.png')" }}
+        />
+        <div aria-hidden className="pointer-events-none absolute inset-0 z-0 bg-black/55" />
 
-      <main className="relative z-10 flex-1 flex flex-col items-center justify-center px-4 py-12 sm:py-16 max-w-2xl mx-auto w-full safe-top safe-bottom">
+        <main className="relative z-10 flex-1 flex flex-col items-center justify-center px-4 py-12 sm:py-16 max-w-2xl mx-auto w-full safe-top safe-bottom">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -120,7 +121,7 @@ export default function RegionLandingPage() {
           Proibido para menores de 18 anos
         </p>
       </main>
-    </div>
+      </div>
     </>
   );
 }
