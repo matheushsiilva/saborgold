@@ -1,6 +1,6 @@
 export default function CatalogFooter() {
   return (
-    <footer className="border-t border-white/5 bg-[#030303] py-8 mt-auto">
+    <footer className="mt-auto w-full border-t border-white/5 bg-[#030303] pt-8 pb-[calc(2rem+env(safe-area-inset-bottom,0px))]">
       <div className="max-w-7xl mx-auto px-4 text-center space-y-3">
         <p className="font-sans text-[10px] text-white/30 uppercase tracking-[0.25em]">
           © {new Date().getFullYear()} Sabor Gold — Todos os direitos reservados

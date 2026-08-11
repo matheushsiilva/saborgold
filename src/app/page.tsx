@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Logo from '@/components/Logo';
+import PageBackground from '@/components/PageBackground';
 import { useRegion, RegionData } from '@/context/RegionContext';
 import { MapPin, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -36,14 +37,19 @@ export default function RegionLandingPage() {
 
   if (!isReady || region) {
     return (
-      <div className="min-h-screen bg-[#FAFAFA] flex items-center justify-center">
-        <div className="w-10 h-10 border-2 border-gold/30 border-t-gold rounded-full animate-spin" />
-      </div>
+      <>
+        <PageBackground color="#050505" />
+        <div className="min-h-dvh flex items-center justify-center bg-[#050505]">
+          <div className="w-10 h-10 border-2 border-gold/30 border-t-gold rounded-full animate-spin" />
+        </div>
+      </>
     );
   }
 
   return (
-    <div className="min-h-dvh text-white relative overflow-x-hidden flex flex-col">
+    <>
+      <PageBackground color="#050505" />
+      <div className="min-h-dvh text-white relative overflow-x-hidden flex flex-col bg-[#050505]">
       {/* Background — absolute avoids iOS Safari fixed-bg jank */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat -z-10"
@@ -115,5 +121,6 @@ export default function RegionLandingPage() {
         </p>
       </main>
     </div>
+    </>
   );
 }

@@ -50,18 +50,18 @@ export default function CatalogPage() {
 
   if (!isReady || !region) {
     return (
-      <div className="min-h-screen bg-[#FAFAFA] flex items-center justify-center">
+      <div className="flex-1 flex items-center justify-center bg-[#FAFAFA]">
         <div className="w-10 h-10 border-2 border-gold/30 border-t-gold rounded-full animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#FAFAFA] text-[#111] flex flex-col">
+    <>
       <CatalogHeader brands={brands} activeBrand={activeBrand} onBrandChange={setActiveBrand} />
       <FloatingWhatsapp />
 
-      <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-5 sm:py-8">
+      <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-8 pb-20 bg-[#FAFAFA]">
         <div className="relative mb-6 sm:mb-8 max-w-md">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#999] pointer-events-none" />
           <input
@@ -85,7 +85,7 @@ export default function CatalogPage() {
             <p className="text-sm text-[#666] mt-2 font-medium">Cadastre produtos no painel admin.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5 pb-[calc(4.5rem+env(safe-area-inset-bottom,0px))]">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5">
             {products.map((p, i) => (
               <ProductCatalogCard key={p.id} product={p} index={i} />
             ))}
@@ -94,6 +94,6 @@ export default function CatalogPage() {
       </main>
 
       <CatalogFooter />
-    </div>
+    </>
   );
 }

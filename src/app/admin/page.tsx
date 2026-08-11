@@ -322,7 +322,7 @@ export default function AdminPage() {
   // Lock Screen rendering
   if (!isAuthenticated) {
     return (
-      <div className="min-h-dvh bg-dark-bg flex items-center justify-center relative p-4 overflow-hidden safe-top safe-bottom">
+      <div className="flex-1 flex items-center justify-center relative p-4 overflow-hidden">
         {/* Background glow effects */}
         <div className="absolute top-1/4 left-1/4 w-[300px] h-[300px] bg-gold/5 rounded-full filter blur-[80px]" />
         <div className="absolute bottom-1/4 right-1/4 w-[300px] h-[300px] bg-gold/5 rounded-full filter blur-[80px]" />
@@ -384,7 +384,7 @@ export default function AdminPage() {
   // Dashboard content if loading
   if (loading) {
     return (
-      <div className="min-h-screen bg-dark-bg text-white flex flex-col justify-center items-center">
+      <div className="flex-1 flex flex-col justify-center items-center">
         <div className="relative w-12 h-12">
           <span className="absolute inset-0 rounded-full border-2 border-gold/20" />
           <span className="absolute inset-0 rounded-full border-2 border-t-gold border-r-transparent border-b-transparent border-l-transparent animate-spin" />
@@ -394,14 +394,14 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-dvh bg-dark-bg text-white flex flex-col lg:flex-row font-sans">
+    <div className="flex flex-col lg:flex-row flex-1 w-full">
       <AdminSidebar
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         handleLogout={handleLogout}
       />
 
-      <main className="flex-1 min-w-0 overflow-y-auto overflow-x-hidden p-4 sm:p-6 lg:p-8 bg-[#050505] pb-8 lg:pb-8 safe-bottom">
+      <main className="flex-1 min-w-0 p-4 sm:p-6 lg:p-8 pb-[calc(1.5rem+env(safe-area-inset-bottom,0px))]">
         
         {/* Tab 1: Dashboard Overview */}
         {activeTab === 'dashboard' && (

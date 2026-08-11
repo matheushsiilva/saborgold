@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Logo from '@/components/Logo';
+import PageBackground from '@/components/PageBackground';
 import { useAuth } from '@/context/AuthContext';
 import { ArrowLeft, Phone, Mail } from 'lucide-react';
 
@@ -36,7 +37,9 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-dvh bg-dark-bg text-white flex flex-col items-center justify-center px-4 relative safe-top safe-bottom">
+    <>
+      <PageBackground color="#050505" />
+      <div className="min-h-dvh bg-[#050505] text-white flex flex-col items-center justify-center px-4 relative">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.08),transparent_70%)]" />
       <Link
         href="/catalogo"
@@ -122,5 +125,6 @@ export default function LoginPage() {
         </form>
       </div>
     </div>
+    </>
   );
 }

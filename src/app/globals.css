@@ -21,10 +21,19 @@
   --foreground: #111111;
 }
 
+html {
+  min-height: 100dvh;
+  min-height: -webkit-fill-available;
+  background-color: #050505;
+}
+
 body {
-  background-color: #FAFAFA;
+  min-height: 100dvh;
+  min-height: -webkit-fill-available;
+  background-color: #050505;
   color: #111111;
   font-family: "Montserrat", sans-serif;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Custom luxury effects */
