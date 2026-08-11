@@ -36,16 +36,16 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-dark-bg text-white flex flex-col items-center justify-center px-4 relative">
+    <div className="min-h-dvh bg-dark-bg text-white flex flex-col items-center justify-center px-4 relative safe-top safe-bottom">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.08),transparent_70%)]" />
       <Link
         href="/catalogo"
-        className="absolute top-6 left-6 flex items-center gap-2 text-xs text-white/50 hover:text-gold uppercase tracking-wider"
+        className="absolute top-[calc(1.5rem+env(safe-area-inset-top,0px))] left-[calc(1rem+env(safe-area-inset-left,0px))] flex items-center gap-2 text-xs text-white/50 hover:text-gold uppercase tracking-wider min-h-[44px] touch-manipulation"
       >
         <ArrowLeft className="w-4 h-4" /> Voltar
       </Link>
 
-      <div className="relative z-10 w-full max-w-md glassmorphism-gold rounded-2xl border border-gold/15 p-8 space-y-6">
+      <div className="relative z-10 w-full max-w-md glassmorphism-gold rounded-2xl border border-gold/15 p-6 sm:p-8 space-y-6 my-8">
         <div className="flex flex-col items-center text-center">
           <Logo size="lg" />
           <h1 className="font-display text-xl font-bold tracking-[0.2em] uppercase mt-6">Entrar</h1>

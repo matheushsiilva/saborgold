@@ -8,7 +8,7 @@ interface LogoProps {
 }
 
 const heights = {
-  sm: 40,
+  sm: 36,
   md: 52,
   lg: 72,
   xl: 110,

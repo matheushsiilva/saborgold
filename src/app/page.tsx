@@ -43,22 +43,22 @@ export default function RegionLandingPage() {
   }
 
   return (
-    <div className="min-h-screen text-white relative overflow-hidden flex flex-col">
-      {/* Background image */}
+    <div className="min-h-dvh text-white relative overflow-x-hidden flex flex-col">
+      {/* Background — absolute avoids iOS Safari fixed-bg jank */}
       <div
-        className="fixed inset-0 bg-cover bg-center bg-no-repeat"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat -z-10"
         style={{ backgroundImage: "url('/fundo_sabor_gold.png')" }}
       />
-      {/* Dark overlay for readability */}
-      <div className="fixed inset-0 bg-black/55" />
+      <div className="absolute inset-0 bg-black/55 -z-10" />
 
-      <main className="relative z-10 flex-1 flex flex-col items-center justify-center px-4 py-16 max-w-2xl mx-auto w-full">
+      <main className="relative z-10 flex-1 flex flex-col items-center justify-center px-4 py-12 sm:py-16 max-w-2xl mx-auto w-full safe-top safe-bottom">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="flex flex-col items-center text-center mb-12"
         >
-          <Logo size="xl" className="mb-8" />
+          <Logo size="lg" className="mb-6 sm:mb-8 sm:hidden" />
+          <Logo size="xl" className="mb-6 sm:mb-8 hidden sm:block" />
           <span className="font-sans text-[10px] uppercase tracking-[0.4em] text-gold font-bold mb-4">
             Vapes Premium
           </span>
@@ -84,7 +84,7 @@ export default function RegionLandingPage() {
                 key={r.id}
                 type="button"
                 onClick={() => selectRegion(r)}
-                className="group flex items-center justify-between p-5 rounded-xl bg-white border border-[#E5E5E5] hover:border-gold hover:shadow-[0_4px_20px_rgba(212,175,55,0.25)] transition-all text-left shadow-sm"
+                className="group flex items-center justify-between p-4 sm:p-5 rounded-xl bg-white border border-[#E5E5E5] hover:border-gold hover:shadow-[0_4px_20px_rgba(212,175,55,0.25)] transition-all text-left shadow-sm min-h-[64px] touch-manipulation w-full"
               >
                 <div className="flex items-center gap-3">
                   <div className="p-2.5 rounded-lg bg-gold/10 border border-gold/20">

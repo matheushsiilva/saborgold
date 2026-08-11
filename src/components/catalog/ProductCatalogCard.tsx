@@ -64,7 +64,7 @@ export default function ProductCatalogCard({
 
         {product.badge && (
           <span
-            className={`absolute top-2 left-2 sm:top-3 sm:left-3 px-1.5 sm:px-2.5 py-0.5 sm:py-1 text-[7px] sm:text-[8px] font-bold uppercase tracking-widest rounded ${
+            className={`absolute top-2 left-2 sm:top-3 sm:left-3 px-2 py-0.5 sm:px-2.5 sm:py-1 text-[8px] sm:text-[9px] font-bold uppercase tracking-widest rounded ${
               product.badge === 'LANÇAMENTO'
                 ? 'bg-gold-gradient text-black'
                 : 'bg-red-600/90 text-white border border-red-400/30'
@@ -74,34 +74,38 @@ export default function ProductCatalogCard({
           </span>
         )}
         {product.brand && (
-          <span className="absolute top-2 right-2 sm:top-3 sm:right-3 px-1.5 sm:px-2 py-0.5 bg-black/70 border border-gold/20 text-[7px] sm:text-[8px] text-gold font-bold uppercase tracking-wider rounded">
+          <span className="absolute top-2 right-2 sm:top-3 sm:right-3 px-2 py-0.5 bg-black/70 border border-gold/20 text-[8px] sm:text-[9px] text-gold font-bold uppercase tracking-wider rounded max-w-[45%] truncate">
             {product.brand.name}
           </span>
         )}
       </div>
 
-      <div className="p-3 sm:p-5 flex flex-col flex-1 gap-3 sm:gap-4 justify-between">
+      <div className="p-3.5 sm:p-5 flex flex-col flex-1 gap-3 sm:gap-4 justify-between">
         <div className="flex flex-col gap-1">
-          <h3 className="font-display text-xs sm:text-base font-bold tracking-wide text-[#111] group-hover:text-gold-dark transition-colors line-clamp-2 min-h-[2rem] sm:min-h-none">
+          <h3 className="font-display text-sm sm:text-base font-bold tracking-wide text-[#111] group-hover:text-gold-dark transition-colors line-clamp-2">
             {product.name}
           </h3>
-          <p className="font-sans text-[10px] sm:text-[11px] text-[#666] line-clamp-2 hidden sm:block">
-            {product.description}
-          </p>
+          {product.description && (
+            <p className="font-sans text-[11px] sm:text-xs text-[#666] line-clamp-2 leading-snug">
+              {product.description}
+            </p>
+          )}
         </div>
 
-        <p className="font-display text-lg sm:text-2xl font-bold text-gold-dark">R$ {product.price.toFixed(2)}</p>
+        <p className="font-display text-xl sm:text-2xl font-bold text-gold-dark">
+          R$ {product.price.toFixed(2)}
+        </p>
 
         {hasFlavors && (
           <div className="relative">
-            <label className="text-[8px] sm:text-[9px] uppercase tracking-widest text-[#888] font-semibold mb-1 sm:mb-1.5 block">
+            <label className="text-[9px] sm:text-[10px] uppercase tracking-widest text-[#888] font-semibold mb-1.5 block">
               Escolha o sabor
             </label>
             <div className="relative">
               <select
                 value={selectedFlavorId}
                 onChange={(e) => setSelectedFlavorId(e.target.value)}
-                className="w-full appearance-none bg-[#FAFAFA] border border-[#E5E5E5] hover:border-gold/50 focus:border-gold rounded-lg py-2 sm:py-3 pl-2 sm:pl-3 pr-8 sm:pr-10 text-[10px] sm:text-xs text-[#111] outline-none transition-colors"
+                className="w-full appearance-none bg-[#FAFAFA] border border-[#E5E5E5] hover:border-gold/50 focus:border-gold rounded-lg py-2.5 sm:py-3 pl-3 pr-9 text-sm sm:text-xs text-[#111] outline-none transition-colors min-h-[44px]"
               >
                 <option value="">Selecione...</option>
                 {flavors.map((f) => (
@@ -111,10 +115,10 @@ export default function ProductCatalogCard({
                   </option>
                 ))}
               </select>
-              <ChevronDown className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 sm:w-4 sm:h-4 text-gold-dark pointer-events-none" />
+              <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gold-dark pointer-events-none" />
             </div>
             {selectedFlavor?.description && (
-              <p className="mt-1.5 text-[9px] sm:text-[10px] text-[#666] leading-relaxed italic border-l-2 border-gold/50 pl-2 line-clamp-2">
+              <p className="mt-1.5 text-[10px] sm:text-[11px] text-[#666] leading-relaxed italic border-l-2 border-gold/50 pl-2 line-clamp-2">
                 {selectedFlavor.description}
               </p>
             )}
@@ -125,18 +129,18 @@ export default function ProductCatalogCard({
           type="button"
           disabled={!canOrder}
           onClick={handleOrder}
-          className={`w-full py-2.5 sm:py-3.5 rounded-xl font-display font-bold text-[8px] sm:text-[10px] tracking-[0.12em] sm:tracking-[0.18em] uppercase flex items-center justify-center gap-1.5 sm:gap-2 transition-all ${
+          className={`w-full min-h-[44px] py-3 sm:py-3.5 rounded-xl font-display font-bold text-[10px] sm:text-xs tracking-[0.15em] sm:tracking-[0.18em] uppercase flex items-center justify-center gap-2 transition-all touch-manipulation ${
             canOrder
               ? 'bg-gold-gradient text-black shadow-[0_4px_24px_rgba(212,175,55,0.25)] hover:opacity-95 active:scale-[0.98]'
               : 'bg-[#F5F5F5] text-[#999] border border-[#E5E5E5] cursor-not-allowed'
           }`}
         >
-          <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+          <Sparkles className="w-4 h-4 shrink-0" />
           {!product.inStock
             ? 'Indisponível'
             : hasFlavors && !selectedFlavorId
               ? 'Escolha o sabor'
-              : 'WhatsApp'}
+              : 'Pedir no WhatsApp'}
         </button>
       </div>
     </motion.article>
