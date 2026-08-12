@@ -65,6 +65,7 @@ export default function AdminPage() {
     categoryId: '',
     brandId: '',
     badge: '',
+    puffs: '',
     flavorsText: '',
     regionIds: [] as string[],
     isFeatured: false,
@@ -220,6 +221,7 @@ export default function AdminPage() {
           categoryId: categories[0]?.id || '',
           brandId: '',
           badge: '',
+          puffs: '',
           flavorsText: '',
           regionIds: regions.map((r: { id: string }) => r.id),
           isFeatured: false,
@@ -250,6 +252,7 @@ export default function AdminPage() {
       categoryId: prod.categoryId,
       brandId: prod.brandId || '',
       badge: prod.badge || '',
+      puffs: prod.puffs != null ? String(prod.puffs) : '',
       flavorsText,
       regionIds: prod.regions?.map((r: { regionId: string }) => r.regionId) || [],
       isFeatured: prod.isFeatured,
@@ -482,6 +485,7 @@ export default function AdminPage() {
                     categoryId: categories[0]?.id || '',
                     brandId: brands[0]?.id || '',
                     badge: '',
+                    puffs: '',
                     flavorsText: '',
                     regionIds: regions.map((r: { id: string }) => r.id),
                     isFeatured: false,
@@ -809,6 +813,19 @@ export default function AdminPage() {
                   onChange={(e) => setProductForm((p) => ({ ...p, price: e.target.value }))}
                   className="w-full bg-black border border-white/10 focus:border-gold rounded p-2.5 outline-none text-white"
                 />
+              </div>
+              <div>
+                <label className="block text-white/50 mb-1 uppercase font-semibold">Puffs</label>
+                <input
+                  type="number"
+                  min="0"
+                  step="1"
+                  value={productForm.puffs}
+                  onChange={(e) => setProductForm((p) => ({ ...p, puffs: e.target.value }))}
+                  placeholder="Ex: 40000"
+                  className="w-full bg-black border border-white/10 focus:border-gold rounded p-2.5 outline-none text-white"
+                />
+                <p className="text-[9px] text-white/35 mt-1">Exibido no catálogo como 40.000 puffs</p>
               </div>
             </div>
             <div>

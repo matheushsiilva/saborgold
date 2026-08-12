@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronDown, Sparkles } from 'lucide-react';
+import { ChevronDown, Cloud, Sparkles } from 'lucide-react';
 import ProductImage from '@/components/ProductImage';
 import { useWhatsapp } from '@/context/WhatsappContext';
 
@@ -14,6 +14,7 @@ export interface CatalogProduct {
   imageUrl: string;
   inStock: boolean;
   badge?: string | null;
+  puffs?: number | null;
   brand?: { name: string; slug: string } | null;
   flavors?: {
     id: string;
@@ -84,6 +85,12 @@ export default function ProductCatalogCard({
           <h3 className="font-display text-[11px] sm:text-base font-bold tracking-wide text-[#111] group-hover:text-gold-dark transition-colors line-clamp-2 leading-tight">
             {product.name}
           </h3>
+          {product.puffs != null && product.puffs > 0 && (
+            <span className="inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded-full bg-black/60 text-[9px] sm:text-[10px] text-white/90 font-medium">
+              <Cloud className="w-3 h-3 text-sky-300 shrink-0" />
+              {product.puffs.toLocaleString('pt-BR')} puffs
+            </span>
+          )}
           {product.description && (
             <p className="font-sans text-[10px] sm:text-xs text-[#666] line-clamp-1 sm:line-clamp-2 mt-0.5 leading-snug hidden sm:block">
               {product.description}

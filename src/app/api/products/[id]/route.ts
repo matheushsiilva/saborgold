@@ -38,6 +38,7 @@ export async function PUT(
       categoryId,
       brandId,
       badge,
+      puffs,
       isFeatured,
       isBestSeller,
       inStock,
@@ -62,6 +63,12 @@ export async function PUT(
           categoryId: categoryId || existingProduct.categoryId,
           brandId: brandId !== undefined ? (brandId || null) : existingProduct.brandId,
           badge: badge !== undefined ? (badge || null) : existingProduct.badge,
+          puffs:
+            puffs !== undefined
+              ? puffs != null && puffs !== ''
+                ? parseInt(String(puffs), 10)
+                : null
+              : existingProduct.puffs,
           isFeatured: isFeatured !== undefined ? !!isFeatured : existingProduct.isFeatured,
           isBestSeller: isBestSeller !== undefined ? !!isBestSeller : existingProduct.isBestSeller,
           inStock: inStock !== undefined ? !!inStock : existingProduct.inStock,

@@ -45,6 +45,7 @@ model Product {
   brandId      String?
   brand        Brand?          @relation(fields: [brandId], references: [id], onDelete: SetNull)
   badge        String?
+  puffs        Int?
   isFeatured   Boolean         @default(false)
   isBestSeller Boolean         @default(false)
   inStock      Boolean         @default(true)
